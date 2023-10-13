@@ -1,0 +1,8 @@
+/.cache
+/dist
+/.parcel-cache
+/package-lock.json
+/.DS_Store
+/.git
+/node_modules
+
