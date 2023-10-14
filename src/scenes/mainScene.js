@@ -31,7 +31,7 @@ export default class MainScene extends Phaser.Scene {
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
         
 
-        this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
+        this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 15);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.mainCharacter.setScale(0.15);
 
