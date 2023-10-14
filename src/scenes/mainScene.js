@@ -111,6 +111,33 @@ export default class MainScene extends Phaser.Scene {
       }
         
     }
+
+
+    enemyHit(projectile, enemy) {
+        const projectileBounds = new Phaser.Geom.Rectangle(
+            projectile.x + 10, // Adjust these values to set the position of the bounding box
+            projectile.y + 10,
+            18, // Set a very small width
+            18  // Set a very small height
+        );
+    
+        const characterBounds = new Phaser.Geom.Rectangle(
+            enemy.x + 5, // Adjust these values to set the position of the bounding box
+            enemy.y + 5,
+            18, // Set a very small width
+            18  // Set a very small height
+        );
+    
+        if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
+            console.log('Enemy hit!');
+            this.totalCollisions++;
+            enemy.takeDamage();
+            enemy.setTint(0xff0000); // Turn main character red on collision
+      } else {
+          enemy.clearTint(); // Clear the tint if there's no collision
+      }
+        
+    }
   
       update() {
         // Update the enemies in the game loop
@@ -120,6 +147,7 @@ export default class MainScene extends Phaser.Scene {
 
         if (this.enemy.hits >= this.enemy.maxHits) {
             // Increment the enemy index to switch to the next enemy type
+            this.enemy.die();
             this.currentEnemyIndex++;
       
             // Check if there are more enemy types in the sequence
@@ -148,7 +176,7 @@ export default class MainScene extends Phaser.Scene {
         projectile.update();
 
         // Check for collision with main character
-        this.handleCollision(projectile, this.enemy);
+        this.enemyHit(projectile, this.enemy);
     });
       
         // Update bullets

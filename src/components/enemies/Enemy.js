@@ -16,12 +16,15 @@ class Enemy extends Phaser.GameObjects.Sprite {
    
   }
 
+  die() {
+    while(this.x < 1300) {
+      this.x += 10;
+    }
+  }
+
   takeDamage() {
     this.hits++;
-
-    if (this.hits >= this.maxHits) {
-      this.nextEnemy();
-    }
+   
   }
 
   nextEnemy() {
