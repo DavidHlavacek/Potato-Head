@@ -51,7 +51,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
     update() {
 
-        if(this.x < 100 || this.y < 100) {
+        if(this.x < 0 || this.y > 700) {
             this.destroy();
             return;
         }
