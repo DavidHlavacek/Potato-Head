@@ -27,10 +27,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     });
   }
 
-  takeDamage() {
-    this.hits++;
-   
-  }
+  
 
   nextEnemy() {
     
@@ -59,6 +56,14 @@ export class FirstEnemy extends Enemy {
     this.hits = 0;
 
     
+  }
+
+  takeDamage() {
+    if (this.hits < this.maxHits) {
+      this.hits++;
+  }
+  console.log(this.hits)
+   
   }
 
   shoot() {
@@ -119,6 +124,11 @@ export class SecondEnemy extends Enemy {
 
     this.hits = 0;
     
+  }
+
+  takeDamage() {
+    this.hits++;
+   
   }
 
   shoot() {

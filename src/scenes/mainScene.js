@@ -138,13 +138,41 @@ export default class MainScene extends Phaser.Scene {
           
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
             console.log('Collision detected');
-            this.totalCollisions++;
-            this.scene.pause();
-            this.loseHeart(); // Call loseHeart when there is a collision
-
-            console.log('Game over!');
-            mainCharacter.setTint(0xff0000); // Turn main character red on collision
-      } else {
+    
+            // Remove all projectiles
+            this.enemyActiveProjectiles.forEach(projectile => {
+                projectile.destroy();
+            });
+            this.friendlyActiveProjectiles.forEach(projectile => {
+                projectile.destroy();
+            });
+            this.enemyActiveProjectiles = [];
+            this.friendlyActiveProjectiles = [];
+    
+            // Decrease mainCharacter's lives
+            mainCharacter.lives--;
+    
+            // Check if all lives are gone (game over condition)
+            if (mainCharacter.lives <= 0) {
+                this.scene.pause();
+                console.log('Game over!');
+            }
+    
+            // Flash the tint twice and freeze the screen
+            const tintFlashDuration = 500; // Duration for each flash
+            this.tweens.add({
+                targets: mainCharacter,
+                alpha: 0,
+                duration: tintFlashDuration,
+                repeat: 1,
+                yoyo: true,
+                onComplete: () => {
+                    this.scene.pause();
+                }
+            });
+    
+            console.log('MainCharacter lives left: ' + mainCharacter.lives);
+        } else {
           mainCharacter.clearTint(); // Clear the tint if there's no collision
       }
         
@@ -167,12 +195,20 @@ export default class MainScene extends Phaser.Scene {
         );
     
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
-            console.log('Enemy hit!');
-            this.totalCollisions++;
-            projectile.destroy();
-            enemy.takeDamage();
-            enemy.setTint(0xff0000); // Turn main character red on collision
-      } else {
+            if (!enemy.isHitCooldown) {
+                console.log('Enemy hit!');
+                projectile.destroy();
+                enemy.takeDamage();
+                enemy.isHitCooldown = true; // Set a cooldown to prevent rapid hits
+                enemy.setTint(0xff0000); // Turn the enemy red on hit
+    
+                // Reset the cooldown after a delay (e.g., 500ms)
+                this.time.delayedCall(500, () => {
+                    enemy.isHitCooldown = false;
+                    enemy.clearTint(); // Clear the tint after the cooldown
+                });
+            }
+        }else {
           enemy.clearTint(); // Clear the tint if there's no collision
       }
         
@@ -191,6 +227,10 @@ export default class MainScene extends Phaser.Scene {
                 projectile.destroy();
             });
             this.enemyActiveProjectiles = [];
+            this.friendlyActiveProjectiles.forEach(projectile => {
+                projectile.destroy();
+            });
+            this.friendlyActiveProjectiles = [];
             this.currentEnemyIndex++;
       
             // Check if there are more enemy types in the sequence

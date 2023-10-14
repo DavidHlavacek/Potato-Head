@@ -107,17 +107,8 @@ class Projectile extends Phaser.GameObjects.Sprite {
         }
     
         update() {
-    
-            if(this.x < 0 || this.y > 700) {
-                this.destroy();
-                return;
-            }
-    
-            const minY = 100;  // Minimum y position
-            const maxY = 600;  // Maximum y position
-            this.y = Phaser.Math.Between(minY, maxY);
-
-            this.x -= 5;
+            
+            
 
           }
       }
