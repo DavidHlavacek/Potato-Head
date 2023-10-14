@@ -19,7 +19,7 @@ export default class MainScene extends Phaser.Scene {
     preload() {
       // Load enemy textures, assets, etc.
     //   this.load.image('background', require ('../assets/background/bg.png'));
-      this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
+      this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.avif'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
