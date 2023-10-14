@@ -12,7 +12,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
   update() {
     // Move the enemy to the left
-    this.shoot();
+    
    
   }
 
@@ -43,11 +43,15 @@ export class FirstEnemy extends Enemy {
 
 
     // Add the enemy to the scene
-    this.scene.add.existing(this).setSize(100, 100);
+    this.scene.add.existing(this);
   }
 
   shoot() {
     this.scene.spawnBullet(this.x, this.y);
+  }
+
+  update() {
+    this.shoot();
   }
 
   nextEnemy() {

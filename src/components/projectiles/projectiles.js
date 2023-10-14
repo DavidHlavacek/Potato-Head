@@ -28,7 +28,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
     update() {
         this.x -= this.speed;
-        this.y = Math.random() * 4 - 2;
+        this.y += Math.random() * 4 - 2;
         if(this.x < 0) {
             this.destroy();
         }

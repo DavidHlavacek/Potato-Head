@@ -26,7 +26,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
         this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
-        this.mainCharacter.setScale(0.2);
+        this.mainCharacter.setScale(0.15);
         this.spawnCurrentEnemy();
       // Create an enemy instance
   
@@ -36,7 +36,9 @@ export default class MainScene extends Phaser.Scene {
     spawnBullet(x, y) {
         // Create and handle bullet projectiles
         console.log("spawn bullet");
-        const bullet = new Bullet(this, this.enemy.x, this.enemy.y);
+        const bullet = new Bullet(this, x, y);
+        // console.log(bullet.x);
+        // console.log(bullet.y);
         // Implement bullet-specific logic here
         this.activeProjectiles.push(bullet);
     }
@@ -53,7 +55,7 @@ export default class MainScene extends Phaser.Scene {
         const enemyType = this.enemySequence[this.currentEnemyIndex];
         const enemy = new enemyType(this, 1000, 470);
         this.enemy = enemy;
-        this.enemy.setScale(0.2);
+        this.enemy.setScale(0.3);
       }
   
       update() {

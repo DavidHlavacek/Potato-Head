@@ -8,6 +8,7 @@ const config = {
   type: Phaser.AUTO,
   width: 1200,
   height: 600,
+  pixelArt: true,
   scene: MainScene,
 };
 
