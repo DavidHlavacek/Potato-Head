@@ -45,7 +45,7 @@ export default class MainScene extends Phaser.Scene {
       this.hearts = [];
       for (let i = 0; i < 3; i++) {
         const heart = this.add.image(100 + i * 30, 50, 'heart');
-        heart.setScale(0.015);
+        heart.setScale(0.02);
         this.hearts.push(heart);
       }
   
@@ -200,8 +200,8 @@ export default class MainScene extends Phaser.Scene {
   
       update() {
         for (let i = 0; i < this.hearts.length; i++) {
-            this.hearts[i].x = this.mainCharacter.x + i * 30 - 30;
-            this.hearts[i].y = this.mainCharacter.y - 70;
+            this.hearts[i].x = this.mainCharacter.x + i * 25 - 25;
+            this.hearts[i].y = this.mainCharacter.y - 60;
           }
         // Update the enemies in the game loop
         this.mainCharacter.update();
