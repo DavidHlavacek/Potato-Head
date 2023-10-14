@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
 import {FirstEnemy} from '../components/enemies/Enemy.js'
-import {Bullet, Laser} from '../components/projectiles/projectiles.js'
+import {Bullet, Laser, Bone} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
     constructor() {
       super({ key: 'MainScene' });
@@ -42,6 +42,12 @@ export default class MainScene extends Phaser.Scene {
         // Implement bullet-specific logic here
         this.activeProjectiles.push(bullet);
     }
+
+    spawnBone(scene, x, y) {
+        // Create and handle bone projectiles
+        const bone = new Bone(scene, x, y);
+        this.activeProjectiles.push(bone);
+      }
     
       spawnLaser(x, y) {
         // Create and handle laser projectiles

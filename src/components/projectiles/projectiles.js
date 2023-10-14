@@ -36,6 +36,32 @@ class Projectile extends Phaser.GameObjects.Sprite {
   
     // Implement bullet-specific behaviors, e.g., update and collision handling
   }
+
+  export class Bone extends Projectile {
+    constructor(scene, x, y) {
+      super(scene, x, y, 'boneTexture', 20, 20);
+      this.startTime = scene.time.now;
+     this.arcHeight = Phaser.Math.Between(50, 100);
+    }
+
+    update() {
+        if (this.x < 0 || this.y > this.scene.cameras.main.height) {
+            this.destroy();
+            return;
+        }
+        const elapsedTime = this.scene.time.now - this.startTime;
+        const t = elapsedTime / 500; // Adjust this value for the desired speed
+
+        // Calculate the position based on a parabolic path
+        this.x -= this.speed;
+        this.y = this.arcHeight * Math.sin(Math.PI * t) + this.arcHeight;
+
+    
+    }
+  }
+  
+    // Implement bullet-specific behaviors, e.g., update and collision handling
+
   
   export class Laser extends Projectile {
     constructor(scene, x, y, textureKey, laserSpeed, laserDamage) {

@@ -41,21 +41,35 @@ export class FirstEnemy extends Enemy {
   constructor(scene, x, y) {
     super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'firstEnemy', "bullet", 20);
 
-
     // Add the enemy to the scene
     this.scene.add.existing(this);
+    this.lastShakeTime = 0; // Keep track of the last shake time
+    this.shake = 5;
   }
 
   shoot() {
-    this.scene.spawnBullet(this.x, this.y);
-    console.log(this.width);
+    this.scene.spawnBone(this.scene, this.x, this.y);
+    
   }
 
   update() {
     if(this.x > this.scene.cameras.main.width - this.width + 100) {
       
-      this.x -= 5;
+      this.x -= 10;
     } else {
+      const currentTime = this.scene.time.now;
+      
+      // Check if it's been at least 2 seconds since the last shake
+      if (currentTime - this.lastShakeTime >= 500) {
+        // Shake the enemy
+        this.y += this.shake;
+        this.shake *= -1;
+        
+        // Update the last shake time
+        this.lastShakeTime = currentTime;
+      }
+      
+      // Always shoot after shaking
       this.shoot();
     }
   }
