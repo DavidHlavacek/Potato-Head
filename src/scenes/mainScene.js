@@ -8,6 +8,8 @@ export default class MainScene extends Phaser.Scene {
       this.enemyActiveProjectiles = []; // Array to store active projectiles
       this.friendlyActiveProjectiles = [];
       this.enemySequence = [
+        FirstEnemy,
+        SecondEnemy,
         ThirdEnemy    // The next enemy type
         // Add more enemy types in the desired order
       ];
