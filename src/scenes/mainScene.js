@@ -11,6 +11,8 @@ export default class MainScene extends Phaser.Scene {
         SecondEnemy     // The next enemy type
         // Add more enemy types in the desired order
       ];
+      this.totalCollisions = 0; // Initialize totalCollisions
+
       this.currentEnemyIndex = 0;
     }
   
@@ -77,10 +79,11 @@ export default class MainScene extends Phaser.Scene {
         this.enemy = enemy;
         this.enemy.setScale(1.4);
       }
-      handleCollision(bone) {
+      handleCollision(projectile) {
         // Check for collision manually
-        if (bone.getBounds().intersects(this.mainCharacter.getBounds())) {
+        if (projectile.getBounds().intersects(this.mainCharacter.getBounds())) {
             // Handle collision logic
+            this.totalCollisions++; // Assuming you have a variable to track total collisions
             this.scene.pause();
             console.log('Game over!'); // Example message, replace with your game-over logic
         }
