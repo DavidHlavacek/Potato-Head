@@ -4,7 +4,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.projectileType = projectileType;
     this.maxHits = maxHits;
-    this.hits = 0;
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
@@ -17,9 +16,15 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   die() {
-    while(this.x < 1300) {
-      this.x += 10;
-    }
+    const tweens = this.scene.tweens;
+    tweens.add({
+        targets: this,
+        x: this.x - 1300, // Adjust the distance as needed
+        duration: 1000, // Adjust the duration as needed
+        onComplete: () => {
+            this.destroy();
+        }
+    });
   }
 
   takeDamage() {
@@ -51,6 +56,7 @@ export class FirstEnemy extends Enemy {
 
     this.lastShotTime = 0; // Keep track of the last shot time
     this.nextShotDelay = Phaser.Math.Between(500, 3000);
+    this.hits = 0;
 
     
   }
@@ -101,7 +107,7 @@ export class FirstEnemy extends Enemy {
 
 export class SecondEnemy extends Enemy {
   constructor(scene, x, y) {
-    super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'secondEnemy', "laser", 30);
+    super(scene, scene.cameras.main.width + 200, scene.cameras.main.height - 350, 'secondEnemy', "laser", 30);
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
@@ -111,16 +117,17 @@ export class SecondEnemy extends Enemy {
     this.lastShotTime = 0; // Keep track of the last shot time
     this.nextShotDelay = Phaser.Math.Between(500, 3000);
 
+    this.hits = 0;
     
   }
 
   shoot() {
-    this.scene.spawnBone(this.scene, this.x - 190, this.y - 100);
+    this.scene.spawnLaser(this.scene, this.x, this.y);
     
   }
 
   update() {
-    if(this.x > this.scene.cameras.main.width - this.width + 100) {
+    if(this.x > this.scene.cameras.main.width - this.width) {
       
       this.x -= 10;
     } else {

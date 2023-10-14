@@ -25,6 +25,7 @@ export default class MainScene extends Phaser.Scene {
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
+      this.load.image('laser', require('../assets/sprites/projectiles/laser.png'));
     }
   
     create() {
@@ -100,8 +101,13 @@ export default class MainScene extends Phaser.Scene {
         // Create an instance of the current enemy type and add it to the scene
         const enemyType = this.enemySequence[this.currentEnemyIndex];
         const enemy = new enemyType(this, 1000, 470);
+        if (enemyType === FirstEnemy) {
+            enemy.setScale(1.4);
+        } else if (enemyType === SecondEnemy) {
+            enemy.setScale(4);
+        } // Add more conditions for other enemy types
         this.enemy = enemy;
-        this.enemy.setScale(1.4);
+        
       }
       loseHeart() {
         if (this.hearts.length > 0) {
@@ -163,6 +169,7 @@ export default class MainScene extends Phaser.Scene {
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
             console.log('Enemy hit!');
             this.totalCollisions++;
+            projectile.destroy();
             enemy.takeDamage();
             enemy.setTint(0xff0000); // Turn main character red on collision
       } else {
@@ -180,6 +187,10 @@ export default class MainScene extends Phaser.Scene {
         if (this.enemy.hits >= this.enemy.maxHits) {
             // Increment the enemy index to switch to the next enemy type
             this.enemy.die();
+            this.enemyActiveProjectiles.forEach(projectile => {
+                projectile.destroy();
+            });
+            this.enemyActiveProjectiles = [];
             this.currentEnemyIndex++;
       
             // Check if there are more enemy types in the sequence
