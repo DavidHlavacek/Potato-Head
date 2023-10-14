@@ -42,12 +42,13 @@ class Projectile extends Phaser.GameObjects.Sprite {
       super(scene, x, y, 'bone', 20, 20);
 
       this.velocityX = -5;  // Horizontal velocity (to the left)
-      this.velocityY = Phaser.Math.Between(-10, -20); // Initial vertical velocity (upward)
-      this.gravity = Phaser.Math.Between(0.5, 4); 
+      this.velocityY = Phaser.Math.Between(0, -20); // Initial vertical velocity (upward)
+      this.gravity = Phaser.Math.Between(1, 4); 
     }
+
     handleCollision() {
       this.scene.handleCollision(this);
-  }
+    }
 
     update() {
 
@@ -61,7 +62,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
         // Adjust the size of the parabola by changing the vertical velocity
         this.velocityY += this.gravity;
-        this.velocityX -= Phaser.Math.Between(0, 1);;
+        this.velocityX -= Phaser.Math.Between(0, 2);;
      
       }
   }
