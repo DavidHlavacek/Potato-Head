@@ -77,13 +77,15 @@ export default class MainScene extends Phaser.Scene {
         this.enemy = enemy;
         this.enemy.setScale(1.4);
       }
-      handleCollision(projectile) {
-        // Check for collision manually
-        if (projectile.getBounds().intersects(this.mainCharacter.getBounds())) {
-            // Handle collision logic
-            this.totalCollisions++; // Assuming you have a variable to track total collisions
+      handleCollision(projectile, mainCharacter) {
+        const projectileBounds = projectile.getBounds();
+        const characterBounds = mainCharacter.getBounds();
+    
+        if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
+            console.log('Collision detected');
+            this.totalCollisions++;
             this.scene.pause();
-            console.log('Game over!'); // Example message, replace with your game-over logic
+            console.log('Game over!');
         }
     }
   
@@ -112,11 +114,14 @@ export default class MainScene extends Phaser.Scene {
         // You should maintain a list of active projectiles in your game
         // and iterate through them to call their update methods.
         // Example:
-        
+        this.activeProjectiles.forEach(projectile => {
+          projectile.update();
+  
+          // Check for collision with main character
+          this.handleCollision(projectile, this.mainCharacter);
+      });
         // Update bullets
-        this.activeProjectiles.forEach(Projectile => {
-          Projectile.update();
-        });
+    
 
       }
     

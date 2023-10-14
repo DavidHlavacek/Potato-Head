@@ -46,6 +46,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
       this.gravity = Phaser.Math.Between(0.5, 4); 
     }
     handleCollision() {
+      console.log("consa waaaa")
       this.scene.handleCollision(this);
   }
 
