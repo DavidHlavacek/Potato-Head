@@ -16,6 +16,7 @@ export default class MainScene extends Phaser.Scene {
   
     preload() {
       // Load enemy textures, assets, etc.
+      this.load.image('background', require ('../assets/background/bg.png'));
       this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
     }
@@ -23,10 +24,13 @@ export default class MainScene extends Phaser.Scene {
     create() {
 
         this.camera = this.cameras.add(0, 0, 1200, 600  );
-
+        const background = this.add.image(1200, 600, 'background'); 
+        background.setScrollFactor(0);
+        this.physics.world.setBounds(0, 0, 1200, 600); // Set world bounds if needed
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
         this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
         this.mainCharacter.setScale(0.15);
+        
         this.spawnCurrentEnemy();
       // Create an enemy instance
   

@@ -10,6 +10,11 @@ const config = {
   height: 600,
   pixelArt: true,
   scene: MainScene,
+  default: 'arcade',
+  arcade: {
+    gravity: { y: 200 }, // Set the gravity value as needed
+    debug: true // Set to true for debugging physics
+  }
 };
 
 const game = new Phaser.Game(config);
