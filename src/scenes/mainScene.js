@@ -68,8 +68,6 @@ export default class MainScene extends Phaser.Scene {
         // Implement laser-specific logic here
       }
 
-    
-
       spawnCurrentEnemy() {
         // Create an instance of the current enemy type and add it to the scene
         const enemyType = this.enemySequence[this.currentEnemyIndex];
@@ -107,18 +105,15 @@ export default class MainScene extends Phaser.Scene {
       }
 
       updateProjectiles() {
-        
-          // Iterate through all active projectiles and update their movement
-          
-      
+        // Iterate through all active projectiles and update their movement
+        // You should maintain a list of active projectiles in your game
+        // and iterate through them to call their update methods.
+        // Example:
         
         // Update bullets
         this.activeProjectiles.forEach(Projectile => {
           Projectile.update();
         });
-        this.activeProjectiles.forEach(projectile => {
-          projectile.update();  // Call the update method of each projectile
-      });
 
       }
     
