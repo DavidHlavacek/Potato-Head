@@ -33,7 +33,7 @@ export default class MainScene extends Phaser.Scene {
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
         
 
-        this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
+        this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 15);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.mainCharacter.setScale(0.15);
 
@@ -69,8 +69,6 @@ export default class MainScene extends Phaser.Scene {
         this.activeProjectiles.push(laser);
         // Implement laser-specific logic here
       }
-
-    
 
       spawnCurrentEnemy() {
         // Create an instance of the current enemy type and add it to the scene
@@ -110,18 +108,15 @@ export default class MainScene extends Phaser.Scene {
       }
 
       updateProjectiles() {
-        
-          // Iterate through all active projectiles and update their movement
-          
-      
+        // Iterate through all active projectiles and update their movement
+        // You should maintain a list of active projectiles in your game
+        // and iterate through them to call their update methods.
+        // Example:
         
         // Update bullets
         this.activeProjectiles.forEach(Projectile => {
           Projectile.update();
         });
-        this.activeProjectiles.forEach(projectile => {
-          projectile.update();  // Call the update method of each projectile
-      });
 
       }
     

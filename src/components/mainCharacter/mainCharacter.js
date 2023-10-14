@@ -19,23 +19,29 @@ export default class MainCharacter extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.scene.cursors.up.isDown && !this.isJumping) {
-        this.isJumping = true;
-
-        this.scene.tweens.add({
-            targets: this,
-            y: this.y - 100,
-            duration: 500,
-            onComplete: () => {
-                this.scene.tweens.add({
-                    targets: this,
-                    y: this.y + 100,
-                    duration: 500,
-                    onComplete: () => {
-                        this.isJumping = false;
-                    }
-                });
-            }
-        });
-    }
+      this.isJumping = true;
+  
+      const jumpHeight = 200; // Adjust the jump height as needed
+      const jumpDuration = 400; // Adjust the jump duration as needed
+  
+      // Use quadratic easing for the jump animation
+      this.scene.tweens.add({
+          targets: this,
+          y: this.y - jumpHeight,
+          duration: jumpDuration,
+          ease: 'Quad.easeOut', // This eases the upward motion
+          onComplete: () => {
+              this.scene.tweens.add({
+                  targets: this,
+                  y: this.y + jumpHeight,
+                  duration: jumpDuration,
+                  ease: 'Quad.easeIn', // This eases the downward motion
+                  onComplete: () => {
+                      this.isJumping = false;
+                  }
+              });
+          }
+      });
+  }
 }
 }
