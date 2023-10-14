@@ -21,8 +21,8 @@ export default class MainCharacter extends Phaser.Physics.Arcade.Sprite {
     if (this.scene.cursors.up.isDown && !this.isJumping) {
       this.isJumping = true;
   
-      const jumpHeight = 200; // Adjust the jump height as needed
-      const jumpDuration = 400; // Adjust the jump duration as needed
+      const jumpHeight = 220; // Adjust the jump height as needed
+      const jumpDuration = 265; // Adjust the jump duration as needed
   
       // Use quadratic easing for the jump animation
       this.scene.tweens.add({
