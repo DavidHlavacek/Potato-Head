@@ -95,15 +95,30 @@ class Projectile extends Phaser.GameObjects.Sprite {
           }
       }
   
-  export class Laser extends Projectile {
-    constructor(scene, x, y, textureKey, laserSpeed, laserDamage) {
-      super(scene, x, y, 'laserTexture', laserSpeed, laserDamage);
-    }
+      export class Laser extends Projectile {
+        constructor(scene, x, y) {
+          super(scene, x, y, 'laser', 20, 20);
+    
+        }
+    
+        handleCollision() {
+          console.log("consa waaaa")
+          this.scene.handleCollision(this);
+        }
+    
+        update() {
+    
+            if(this.x < 0 || this.y > 700) {
+                this.destroy();
+                return;
+            }
+    
+            const minY = 100;  // Minimum y position
+            const maxY = 600;  // Maximum y position
+            this.y = Phaser.Math.Between(minY, maxY);
 
-    update() {
+            this.x -= 5;
 
-    }
-  
-    // Implement laser-specific behaviors, e.g., update and collision handling
-  }
+          }
+      }
   

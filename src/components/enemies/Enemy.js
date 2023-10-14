@@ -122,7 +122,7 @@ export class SecondEnemy extends Enemy {
   }
 
   shoot() {
-    this.scene.spawnBone(this.scene, this.x - 190, this.y - 100);
+    this.scene.spawnLaser(this.scene, this.x, this.y);
     
   }
 

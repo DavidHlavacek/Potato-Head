@@ -24,6 +24,7 @@ export default class MainScene extends Phaser.Scene {
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
+      this.load.image('laser', require('../assets/sprites/projectiles/laser.png'));
     }
   
     create() {
