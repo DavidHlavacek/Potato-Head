@@ -82,8 +82,13 @@ export default class MainScene extends Phaser.Scene {
         // Create an instance of the current enemy type and add it to the scene
         const enemyType = this.enemySequence[this.currentEnemyIndex];
         const enemy = new enemyType(this, 1000, 470);
+        if (enemyType === FirstEnemy) {
+            enemy.setScale(1.4);
+        } else if (enemyType === SecondEnemy) {
+            enemy.setScale(4);
+        } // Add more conditions for other enemy types
         this.enemy = enemy;
-        this.enemy.setScale(1.4);
+        
       }
       handleCollision(projectile, mainCharacter) {
         const projectileBounds = new Phaser.Geom.Rectangle(
@@ -149,6 +154,10 @@ export default class MainScene extends Phaser.Scene {
         if (this.enemy.hits >= this.enemy.maxHits) {
             // Increment the enemy index to switch to the next enemy type
             this.enemy.die();
+            this.enemyActiveProjectiles.forEach(projectile => {
+                projectile.destroy();
+            });
+            this.enemyActiveProjectiles = [];
             this.currentEnemyIndex++;
       
             // Check if there are more enemy types in the sequence

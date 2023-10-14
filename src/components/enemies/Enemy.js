@@ -19,7 +19,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     const tweens = this.scene.tweens;
     tweens.add({
         targets: this,
-        x: this.x - 1000, // Adjust the distance as needed
+        x: this.x - 1300, // Adjust the distance as needed
         duration: 1000, // Adjust the duration as needed
         onComplete: () => {
             this.destroy();
@@ -107,7 +107,7 @@ export class FirstEnemy extends Enemy {
 
 export class SecondEnemy extends Enemy {
   constructor(scene, x, y) {
-    super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'secondEnemy', "laser", 30);
+    super(scene, scene.cameras.main.width + 200, scene.cameras.main.height - 350, 'secondEnemy', "laser", 30);
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
@@ -127,7 +127,7 @@ export class SecondEnemy extends Enemy {
   }
 
   update() {
-    if(this.x > this.scene.cameras.main.width - this.width + 100) {
+    if(this.x > this.scene.cameras.main.width - this.width) {
       
       this.x -= 10;
     } else {
