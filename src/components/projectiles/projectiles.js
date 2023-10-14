@@ -111,6 +111,28 @@ class Projectile extends Phaser.GameObjects.Sprite {
      
       }
   }
+
+  export class Ghost extends Projectile {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'ghost', 20, 20);
+        this.amplitude = Phaser.Math.Between(30, 90);;   // Adjust the amplitude of the sine wave.
+        this.frequency = 0.1;  // Adjust the frequency of the sine wave.
+        this.time = 0;
+        this.initialY = y;
+    }
+
+    update() {
+        // Update the time variable.
+        this.time += 1;
+
+        this.x -= 5;
+        // Calculate the new Y-coordinate based on a continuous sine wave.
+        this.y = this.initialY + this.amplitude * Math.sin(this.frequency * this.time);
+
+        // Call the parent class's update method to handle other behaviors.
+        super.update();
+    }
+  }
   
     // Implement bullet-specific behaviors, e.g., update and collision handling
     export class Weapon extends Projectile {

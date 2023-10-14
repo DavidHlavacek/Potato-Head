@@ -1,15 +1,14 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
-import {FirstEnemy, SecondEnemy} from '../components/enemies/Enemy.js'
-import {Trash, Bullet, Laser, Bone, Weapon} from '../components/projectiles/projectiles.js'
+import {FirstEnemy, SecondEnemy, ThirdEnemy} from '../components/enemies/Enemy.js'
+import {Trash, Bullet, Laser, Bone, Weapon, Ghost} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
     constructor() {
       super({ key: 'MainScene' });
       this.enemyActiveProjectiles = []; // Array to store active projectiles
       this.friendlyActiveProjectiles = [];
       this.enemySequence = [
-        FirstEnemy,
-        SecondEnemy     // The next enemy type
+        ThirdEnemy    // The next enemy type
         // Add more enemy types in the desired order
       ];
       this.totalCollisions = 0; // Initialize totalCollisions
@@ -24,6 +23,8 @@ export default class MainScene extends Phaser.Scene {
       this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
+      this.load.image('thirdEnemy', require('../assets/sprites/enemies/ghostman.png'));
+      this.load.image('ghost', require('../assets/sprites/projectiles/ghost.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
       this.load.image('laser', require('../assets/sprites/projectiles/laser.png'));
       this.load.image('weapon', require('../assets/sprites/projectiles/fireball.gif'));
@@ -54,7 +55,12 @@ export default class MainScene extends Phaser.Scene {
    
   
   }
-
+    spawnGhost(scene,x, y) {
+        // Create and handle bullet projectiles
+        const ghost = new Ghost(scene, x, y);
+        ghost.setScale(0.15);
+        this.enemyActiveProjectiles.push(ghost);
+    }
     spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
         const bullet = new Bullet(scene, x, y);
@@ -100,7 +106,10 @@ export default class MainScene extends Phaser.Scene {
             enemy.setScale(1.4);
         } else if (enemyType === SecondEnemy) {
             enemy.setScale(4);
-        } // Add more conditions for other enemy types
+        } else if (enemyType === ThirdEnemy) {
+            enemy.setScale(2);
+        }
+         // Add more conditions for other enemy types
         this.enemy = enemy;
         
       }
