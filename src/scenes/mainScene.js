@@ -19,7 +19,7 @@ export default class MainScene extends Phaser.Scene {
     preload() {
       // Load enemy textures, assets, etc.
     //   this.load.image('background', require ('../assets/background/bg.png'));
-      this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.avif'));
+      this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
@@ -33,9 +33,9 @@ export default class MainScene extends Phaser.Scene {
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
         
 
-        this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 15);
+        this.mainCharacter = new MainCharacter(this, 0 + 100, 548, 'mainCharacter', 10, 15);
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.mainCharacter.setScale(0.15);
+        this.mainCharacter.setScale(0.3);
 
         this.spawnCurrentEnemy();
       // Create an enemy instance
