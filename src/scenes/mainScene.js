@@ -161,7 +161,7 @@ export default class MainScene extends Phaser.Scene {
                 targets: mainCharacter,
                 alpha: 0,
                 duration: tintFlashDuration,
-                repeat: 1,
+                repeat: 2,
                 yoyo: true,
             });
     
