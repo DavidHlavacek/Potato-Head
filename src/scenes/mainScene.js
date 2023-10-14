@@ -78,15 +78,30 @@ export default class MainScene extends Phaser.Scene {
         this.enemy.setScale(1.4);
       }
       handleCollision(projectile, mainCharacter) {
-        const projectileBounds = projectile.getBounds();
-        const characterBounds = mainCharacter.getBounds();
+        const projectileBounds = new Phaser.Geom.Rectangle(
+            projectile.x + 10, // Adjust these values to set the position of the bounding box
+            projectile.y + 10,
+            18, // Set a very small width
+            18  // Set a very small height
+        );
+    
+        const characterBounds = new Phaser.Geom.Rectangle(
+            mainCharacter.x + 5, // Adjust these values to set the position of the bounding box
+            mainCharacter.y + 5,
+            18, // Set a very small width
+            18  // Set a very small height
+        );
     
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
             console.log('Collision detected');
             this.totalCollisions++;
             this.scene.pause();
             console.log('Game over!');
-        }
+            mainCharacter.setTint(0xff0000); // Turn main character red on collision
+      } else {
+          mainCharacter.clearTint(); // Clear the tint if there's no collision
+      }
+        
     }
   
       update() {
