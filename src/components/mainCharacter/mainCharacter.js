@@ -29,7 +29,7 @@ export default class MainCharacter extends Phaser.Physics.Arcade.Sprite {
     
     if (this.scene.cursors.left.isDown && this.x > 55) {
         this.x -= this.speed;
-    } else if (this.scene.cursors.right.isDown && this.x < 600) {
+    } if (this.scene.cursors.right.isDown && this.x < 600) {
         this.x += this.speed;
     }
 
