@@ -44,7 +44,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 export class FirstEnemy extends Enemy {
   static textureKey = 'firstEnemy';
   constructor(scene, x, y) {
-    super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'firstEnemy', "bullet", 5);
+    super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'firstEnemy', "bullet", 10);
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
