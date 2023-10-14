@@ -143,11 +143,8 @@ export default class MainScene extends Phaser.Scene {
             this.enemyActiveProjectiles.forEach(projectile => {
                 projectile.destroy();
             });
-            this.friendlyActiveProjectiles.forEach(projectile => {
-                projectile.destroy();
-            });
+   
             this.enemyActiveProjectiles = [];
-            this.friendlyActiveProjectiles = [];
     
             // Decrease mainCharacter's lives
             mainCharacter.lives--;
@@ -166,9 +163,6 @@ export default class MainScene extends Phaser.Scene {
                 duration: tintFlashDuration,
                 repeat: 1,
                 yoyo: true,
-                onComplete: () => {
-                    this.scene.pause();
-                }
             });
     
             console.log('MainCharacter lives left: ' + mainCharacter.lives);
