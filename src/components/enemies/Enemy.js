@@ -1,5 +1,4 @@
-
-export default class Enemy extends Phaser.GameObjects.Sprite {
+class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, textureKey, projectileType, maxHits) {
     super(scene, x, y, textureKey);
     this.scene = scene;
@@ -8,7 +7,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.hits = 0;
 
     // Add the enemy to the scene
-    this.scene.add.existing(this);
+    this.scene.add.existing(this).setSize(100, 100);
   }
 
   update() {
@@ -37,9 +36,14 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   
 }
 
-class FirstEnemy extends Enemy {
+export class FirstEnemy extends Enemy {
+  static textureKey = 'firstEnemy';
   constructor(scene, x, y) {
-    super(scene, x, y, 'firstEnemy', "bullet"); // 0 maxHits, as it won't be replaced
+    super(scene, x, y, 'firstEnemy', "bullet", 20);
+
+
+    // Add the enemy to the scene
+    this.scene.add.existing(this).setSize(100, 100);
   }
 
   shoot() {
@@ -57,7 +61,7 @@ class FirstEnemy extends Enemy {
   // Additional behavior for the different enemy, if needed
 }
 
-class SecondEnemy extends Enemy {
+export class SecondEnemy extends Enemy {
   constructor(scene, x, y) {
     super(scene, x, y, 'secondEnemy', "bullet"); // 0 maxHits, as it won't be replaced
   }

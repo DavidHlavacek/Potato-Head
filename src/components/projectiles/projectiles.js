@@ -21,20 +21,23 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
   }
   
-  class Bullet extends Projectile {
-    constructor(scene, x, y, textureKey, bulletSpeed, bulletDamage) {
-      super(scene, x, y, 'bulletTexture', bulletSpeed, bulletDamage);
+  export class Bullet extends Projectile {
+    constructor(scene, x, y,) {
+      super(scene, x, y, 'bulletTexture', 20, 20);
     }
 
     update() {
         this.x -= this.speed;
         this.y = Math.random() * 4 - 2;
+        if(this.x < 0) {
+            this.destroy();
+        }
     }
   
     // Implement bullet-specific behaviors, e.g., update and collision handling
   }
   
-  class Laser extends Projectile {
+  export class Laser extends Projectile {
     constructor(scene, x, y, textureKey, laserSpeed, laserDamage) {
       super(scene, x, y, 'laserTexture', laserSpeed, laserDamage);
     }

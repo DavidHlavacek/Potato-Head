@@ -1,8 +1,7 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
-import Enemy from '../components/enemies/Enemy.js'
-import FirstEnemy from '../components/enemies/Enemy.js'
-
+import {FirstEnemy} from '../components/enemies/Enemy.js'
+import {Bullet, Laser} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
     constructor() {
       super({ key: 'MainScene' });
@@ -17,8 +16,8 @@ export default class MainScene extends Phaser.Scene {
   
     preload() {
       // Load enemy textures, assets, etc.
-      this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png')).setScale(0.5);
-      this.load.image('firstEnemy', require('../assets/sprites/characters/potatoHead.png')).setFrameSize(100, 100);
+      this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
+      this.load.image('firstEnemy', require('../assets/sprites/characters/potatoHead.png'));
     }
   
     create() {
@@ -26,8 +25,8 @@ export default class MainScene extends Phaser.Scene {
         this.camera = this.cameras.add(0, 0, 1200, 600  );
 
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
-        this.mainCharacter = new MainCharacter(this, 0, 0, 'mainCharacter', 10, 2);
-
+        this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
+        this.mainCharacter.setScale(0.2);
         this.spawnCurrentEnemy();
       // Create an enemy instance
   
@@ -36,7 +35,8 @@ export default class MainScene extends Phaser.Scene {
 
     spawnBullet(x, y) {
         // Create and handle bullet projectiles
-        const bullet = new Bullet(this, x, y);
+        console.log("spawn bullet");
+        const bullet = new Bullet(this, this.enemy.x, this.enemy.y);
         // Implement bullet-specific logic here
         this.activeProjectiles.push(bullet);
     }
@@ -51,8 +51,9 @@ export default class MainScene extends Phaser.Scene {
       spawnCurrentEnemy() {
         // Create an instance of the current enemy type and add it to the scene
         const enemyType = this.enemySequence[this.currentEnemyIndex];
-        const enemy = new enemyType(this, 400, 300);
+        const enemy = new enemyType(this, 1000, 470);
         this.enemy = enemy;
+        this.enemy.setScale(0.2);
       }
   
       update() {
