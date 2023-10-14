@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
+import Hearts from '../components/Heart/Heart.js'
 import {FirstEnemy, SecondEnemy} from '../components/enemies/Enemy.js'
 import {Bullet, Laser, Bone, Weapon} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
@@ -29,39 +30,28 @@ export default class MainScene extends Phaser.Scene {
     }
   
     create() {
-      
       this.camera = this.cameras.add(0, 0, 1200, 600);
       this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
-  
+
+      this.hearts = new Hearts(this, this.mainCharacter, 3);
       this.mainCharacter = new MainCharacter(this, 0 + 100, 548, 'mainCharacter', 10, 15);
       this.cursors = this.input.keyboard.createCursorKeys();
       this.mainCharacter.setScale(0.3);
-  
+
       this.spawnCurrentEnemy();
+
+     
   
-      // Add hearts
-      this.hearts = [];
-      const heartCount = 3;
-  
-      for (let i = 0; i < heartCount; i++) {
-          const heart = this.add.image(30 + (i * 30), 30, 'heart').setScale(0.5);
-          heart.setScrollFactor(0);
-          this.hearts.push(heart);
+
+      // Set the scale and position of the hearts
+      for (let i = 0; i < this.hearts.length; i++) {
+          const heart = this.hearts[i];
+          heart.setScale(0.05);
+          heart.x = 20 * i + 10;
       }
-      this.hearts = this.add.group({
-        key: 'heart',
-        repeat: 2, // Number of hearts (adjust as needed)
-        setXY: { x: 10, y: 10, stepX: 20 } // Adjust positioning as needed
-    });
-
-    // Scale down the hearts and reposition them
-    this.hearts.children.iterate((heart, index) => {
-        heart.setScale(0.05); // Adjust the scale as needed
-        heart.x = 20 * index + 10; // Adjust the positioning as needed
-    });
-
-    this.heartsTotal = this.hearts.getChildren().length;
-    }
+  
+      this.heartsTotal = this.hearts.length;
+  }
 
     spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
@@ -110,67 +100,64 @@ export default class MainScene extends Phaser.Scene {
         
       }
       loseHeart() {
-        if (this.hearts.length > 0) {
-            const heart = this.hearts.pop();
-            heart.destroy();
-        }
+        this.hearts.loseHeart();
+      }
 
         // Check if all hearts are gone (game over condition)
-        if (this.hearts.length === 0) {
-            this.scene.pause();
-            console.log('Game over!');
-        }
-    }
-      handleCollision(projectile, mainCharacter) {
-        const projectileBounds = new Phaser.Geom.Rectangle(
-            projectile.x + 50, // Adjust these values to set the position of the bounding box
-            projectile.y + 50,
-            50, // Set a very small width
-            50  // Set a very small height
-        );
+       
     
-        const characterBounds = new Phaser.Geom.Rectangle(
-            mainCharacter.x + 50, // Adjust these values to set the position of the bounding box
-            mainCharacter.y + 50,
-            50, // Set a very small width
-            50  // Set a very small height
-        );
-          
-        if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
-            console.log('Collision detected');
-    
-            // Remove all projectiles
-            this.enemyActiveProjectiles.forEach(projectile => {
-                projectile.destroy();
-            });
-   
-            this.enemyActiveProjectiles = [];
-    
-            // Decrease mainCharacter's lives
-            mainCharacter.lives--;
-    
-            // Check if all lives are gone (game over condition)
-            if (mainCharacter.lives <= 0) {
-                this.scene.pause();
-                console.log('Game over!');
-            }
-    
-            // Flash the tint twice and freeze the screen
-            const tintFlashDuration = 500; // Duration for each flash
-            this.tweens.add({
-                targets: mainCharacter,
-                alpha: 0,
-                duration: tintFlashDuration,
-                repeat: 2,
-                yoyo: true,
-            });
-    
-            console.log('MainCharacter lives left: ' + mainCharacter.lives);
-        } else {
-          mainCharacter.clearTint(); // Clear the tint if there's no collision
+        handleCollision(projectile, mainCharacter) {
+          const projectileBounds = new Phaser.Geom.Rectangle(
+              projectile.x + 50, // Adjust these values to set the position of the bounding box
+              projectile.y + 50,
+              50, // Set a very small width
+              50  // Set a very small height
+          );
+      
+          const characterBounds = new Phaser.Geom.Rectangle(
+              mainCharacter.x + 50, // Adjust these values to set the position of the bounding box
+              mainCharacter.y + 50,
+              50, // Set a very small width
+              50  // Set a very small height
+          );
+            
+          if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
+              console.log('Collision detected');
+      
+              // Remove all projectiles
+              this.enemyActiveProjectiles.forEach(projectile => {
+                  projectile.destroy();
+              });
+      
+              this.enemyActiveProjectiles = [];
+      
+              // Decrease mainCharacter's lives
+              mainCharacter.lives--;
+      
+              // Check if all lives are gone (game over condition)
+              if (mainCharacter.lives <= 0) {
+                  this.scene.pause();
+                  console.log('Game over!');
+              }
+      
+              // Flash the tint twice and freeze the screen
+              const tintFlashDuration = 500; // Duration for each flash
+              this.tweens.add({
+                  targets: mainCharacter,
+                  alpha: 0,
+                  duration: tintFlashDuration,
+                  repeat: 2,
+                  yoyo: true,
+              });
+      
+              console.log('MainCharacter lives left: ' + mainCharacter.lives);
+      
+              // Call loseHeart from Hearts class
+              this.hearts.loseHeart();
+          } else {
+              mainCharacter.clearTint(); // Clear the tint if there's no collision
+          }
       }
-        
-    }
 
 
     enemyHit(projectile, enemy) {
