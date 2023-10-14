@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
-import Hearts from '../components/Heart/Heart.js'
 import {FirstEnemy, SecondEnemy} from '../components/enemies/Enemy.js'
 import {Trash, Bullet, Laser, Bone, Weapon} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
@@ -43,6 +42,7 @@ export default class MainScene extends Phaser.Scene {
       this.mainCharacter.setScale(0.3);
 
       this.spawnCurrentEnemy();
+<<<<<<< HEAD
 
          this.hearts = new Hearts(this, 3, this.mainCharacter);
 
@@ -51,6 +51,20 @@ export default class MainScene extends Phaser.Scene {
       // Set the scale and position of the hearts
       this.heartsTotal = this.hearts.totalHearts
       }
+=======
+      this.hearts = [];
+      for (let i = 0; i < 3; i++) {
+        const heart = this.add.image(100 + i * 30, 50, 'heart');
+        heart.setScale(0.02);
+        this.hearts.push(heart);
+      }
+  
+
+      // Set the scale and position of the hearts
+   
+  
+  }
+>>>>>>> 531599f8e2eec0c18ce759cb673af1fc475d1415
 
     spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
@@ -101,9 +115,7 @@ export default class MainScene extends Phaser.Scene {
         this.enemy = enemy;
         
       }
-      loseHeart() {
-        this.hearts.loseHeart();
-      }
+    
 
         // Check if all hearts are gone (game over condition)
        
@@ -135,6 +147,7 @@ export default class MainScene extends Phaser.Scene {
       
               // Decrease mainCharacter's lives
               mainCharacter.lives--;
+              this.hearts.pop().destroy();
       
               // Check if all lives are gone (game over condition)
               if (mainCharacter.lives <= 0) {
@@ -148,14 +161,13 @@ export default class MainScene extends Phaser.Scene {
                   targets: mainCharacter,
                   alpha: 0,
                   duration: tintFlashDuration,
-                  repeat: 2,
+                  repeat: 1,
                   yoyo: true,
               });
       
               console.log('MainCharacter lives left: ' + mainCharacter.lives);
       
               // Call loseHeart from Hearts class
-              this.hearts.loseHeart();
           } else {
               mainCharacter.clearTint(); // Clear the tint if there's no collision
           }
@@ -198,6 +210,10 @@ export default class MainScene extends Phaser.Scene {
     }
   
       update() {
+        for (let i = 0; i < this.hearts.length; i++) {
+            this.hearts[i].x = this.mainCharacter.x + i * 25 - 25;
+            this.hearts[i].y = this.mainCharacter.y - 60;
+          }
         // Update the enemies in the game loop
         this.mainCharacter.update();
         this.enemy.update();
