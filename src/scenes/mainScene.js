@@ -16,7 +16,7 @@ export default class MainScene extends Phaser.Scene {
   
     preload() {
       // Load enemy textures, assets, etc.
-      this.load.image('background', require ('../assets/background/bg.png'));
+    //   this.load.image('background', require ('../assets/background/bg.png'));
       this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
     }
@@ -24,12 +24,15 @@ export default class MainScene extends Phaser.Scene {
     create() {
 
         this.camera = this.cameras.add(0, 0, 1200, 600  );
-        const background = this.add.image(1200, 600, 'background'); 
-        background.setScrollFactor(0);
-        this.physics.world.setBounds(0, 0, 1200, 600); // Set world bounds if needed
+        
+      
         this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
+        
+
         this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
-        this.mainCharacter.setScale(0.15);
+        this.add.existing(this.mainCharacter);
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.mainCharacter.setScale(0.15);  
         
         this.spawnCurrentEnemy();
       // Create an enemy instance
@@ -37,10 +40,10 @@ export default class MainScene extends Phaser.Scene {
       // Add the enemy to the update list
     }
 
-    spawnBullet(x, y) {
+    spawnBullet(scene, x, y) {
         // Create and handle bullet projectiles
         console.log("spawn bullet");
-        const bullet = new Bullet(this, x, y);
+        const bullet = new Bullet(scene, x, y);
         // console.log(bullet.x);
         // console.log(bullet.y);
         // Implement bullet-specific logic here
@@ -70,7 +73,7 @@ export default class MainScene extends Phaser.Scene {
   
       update() {
         // Update the enemies in the game loop
-        this.mainCharacter.update();
+        this.mainCharacter.update(this.cursors);
         this.enemy.update();
         this.updateProjectiles();
 
