@@ -32,18 +32,18 @@ export default class MainScene extends Phaser.Scene {
         this.mainCharacter = new MainCharacter(this, 200, 400, 'mainCharacter', 10, 2);
         this.add.existing(this.mainCharacter);
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.mainCharacter.setScale(0.15);  
-        
+        this.mainCharacter.setScale(0.15);
+
         this.spawnCurrentEnemy();
       // Create an enemy instance
   
       // Add the enemy to the update list
     }
 
-    spawnBullet(scene, x, y) {
+    spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
         console.log("spawn bullet");
-        const bullet = new Bullet(scene, x, y);
+        const bullet = new Bullet(this, x, y);
         // console.log(bullet.x);
         // console.log(bullet.y);
         // Implement bullet-specific logic here
@@ -56,7 +56,7 @@ export default class MainScene extends Phaser.Scene {
         this.activeProjectiles.push(bone);
       }
     
-      spawnLaser(x, y) {
+      spawnLaser(scene,x, y) {
         // Create and handle laser projectiles
         const laser = new Laser(this, x, y);
         this.activeProjectiles.push(laser);
@@ -73,7 +73,7 @@ export default class MainScene extends Phaser.Scene {
   
       update() {
         // Update the enemies in the game loop
-        this.mainCharacter.update(this.cursors);
+        this.mainCharacter.update();
         this.enemy.update();
         this.updateProjectiles();
 
@@ -103,5 +103,7 @@ export default class MainScene extends Phaser.Scene {
         });
 
       }
-  }
+    
+    }
+  
 

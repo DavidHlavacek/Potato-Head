@@ -11,11 +11,31 @@ export default class MainCharacter extends Phaser.Physics.Arcade.Sprite {
       
   }
 
-  
+  update() {
+    if (this.scene.cursors.left.isDown) {
+        this.x -= this.speed;
+    } else if (this.scene.cursors.right.isDown) {
+        this.x += this.speed;
+    }
+
+    if (this.scene.cursors.up.isDown && !this.isJumping) {
+        this.isJumping = true;
+
+        this.scene.tweens.add({
+            targets: this,
+            y: this.y - 100,
+            duration: 500,
+            onComplete: () => {
+                this.scene.tweens.add({
+                    targets: this,
+                    y: this.y + 100,
+                    duration: 500,
+                    onComplete: () => {
+                        this.isJumping = false;
+                    }
+                });
+            }
+        });
+    }
 }
- 
-
-  
-
-  
-
+}
