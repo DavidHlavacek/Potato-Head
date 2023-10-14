@@ -57,6 +57,7 @@ export default class MainScene extends Phaser.Scene {
         const bone = new Bone(scene, x, y);
         bone.setScale(0.03);
         this.activeProjectiles.push(bone);
+        
       }
     
       spawnLaser(scene,x, y) {
@@ -73,6 +74,14 @@ export default class MainScene extends Phaser.Scene {
         this.enemy = enemy;
         this.enemy.setScale(1.4);
       }
+      handleCollision(bone) {
+        // Check for collision manually
+        if (bone.getBounds().intersects(this.mainCharacter.getBounds())) {
+            // Handle collision logic
+            this.scene.pause();
+            console.log('Game over!'); // Example message, replace with your game-over logic
+        }
+    }
   
       update() {
         // Update the enemies in the game loop

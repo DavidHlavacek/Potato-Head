@@ -45,6 +45,9 @@ class Projectile extends Phaser.GameObjects.Sprite {
       this.velocityY = Phaser.Math.Between(-10, -20); // Initial vertical velocity (upward)
       this.gravity = Phaser.Math.Between(0.5, 4); 
     }
+    handleCollision() {
+      this.scene.handleCollision(this);
+  }
 
     update() {
 
