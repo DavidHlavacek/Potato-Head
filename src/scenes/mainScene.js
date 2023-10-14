@@ -87,17 +87,17 @@ export default class MainScene extends Phaser.Scene {
       }
       handleCollision(projectile, mainCharacter) {
         const projectileBounds = new Phaser.Geom.Rectangle(
-            projectile.x + 10, // Adjust these values to set the position of the bounding box
-            projectile.y + 10,
-            18, // Set a very small width
-            18  // Set a very small height
+            projectile.x + 50, // Adjust these values to set the position of the bounding box
+            projectile.y + 50,
+            50, // Set a very small width
+            50  // Set a very small height
         );
     
         const characterBounds = new Phaser.Geom.Rectangle(
-            mainCharacter.x + 5, // Adjust these values to set the position of the bounding box
-            mainCharacter.y + 5,
-            18, // Set a very small width
-            18  // Set a very small height
+            mainCharacter.x + 50, // Adjust these values to set the position of the bounding box
+            mainCharacter.y + 50,
+            50, // Set a very small width
+            50  // Set a very small height
         );
     
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
