@@ -44,7 +44,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 export class FirstEnemy extends Enemy {
   static textureKey = 'firstEnemy';
   constructor(scene, x, y) {
-    super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'firstEnemy', "bullet", 11);
+    super(scene, scene.cameras.main.width + 300, scene.cameras.main.height - 250, 'firstEnemy', "bullet", 5);
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
@@ -112,7 +112,7 @@ export class FirstEnemy extends Enemy {
 
 export class SecondEnemy extends Enemy {
   constructor(scene, x, y) {
-    super(scene, scene.cameras.main.width + 200, scene.cameras.main.height - 350, 'secondEnemy', "laser", 30);
+    super(scene, scene.cameras.main.width + 200, scene.cameras.main.height - 350, 'secondEnemy', "trash", 30);
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
@@ -132,7 +132,7 @@ export class SecondEnemy extends Enemy {
   }
 
   shoot() {
-    this.scene.spawnLaser(this.scene, this.x, this.y);
+    this.scene.spawnTrash(this.scene, this.x - 265, this.y - 110);
     
   }
 

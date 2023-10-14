@@ -22,20 +22,64 @@ class Projectile extends Phaser.GameObjects.Sprite {
   }
   
   export class Bullet extends Projectile {
-    constructor(scene, x, y,) {
-      super(scene, x, y, 'bulletTexture', 20, 20);
+    constructor(scene, x, y) {
+        super(scene, x, y, 'bullet', 20, 20);
+
+        this.velocityX = 5;  // Horizontal velocity
+        this.velocityY = 5;  // Vertical velocity
+        this.amplitude = 20; // Amplitude of the zigzag pattern
+        this.direction = 1;  // Direction of the zigzag pattern (1 for up, -1 for down)
+    }
+
+    handleCollision() {
+        console.log("Zigzag projectile collision");
+        this.scene.handleCollision(this);
     }
 
     update() {
-        this.x -= this.speed;
-        this.y += Math.random() * 4 - 2;
-        if(this.x < 0) {
+        if (this.x < 0 || this.y > 700) {
             this.destroy();
+            return;
+        }
+
+        // Move horizontally
+        this.x -= this.velocityX;
+
+        // Move vertically in a zigzag pattern
+        this.y += this.velocityY * this.direction;
+
+        // Change direction when reaching the amplitude limit
+        if (Math.abs(this.y - this.y - this.velocityY * this.direction) > this.amplitude) {
+            this.direction *= -1;
         }
     }
   
     // Implement bullet-specific behaviors, e.g., update and collision handling
   }
+  export class Trash extends Projectile {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'trash', 20, 20);
+
+        this.velocityX = Phaser.Math.Between(5, 25); // Horizontal velocity (forward)
+        this.velocityY = Phaser.Math.Between(10, 22); // Vertical velocity (falling down)
+    }
+
+    update() {
+        if (this.x < 0 || this.y > 700) {
+            this.destroy();
+            return;
+        }
+
+        // Move forward and downward
+        this.x -= this.velocityX;
+        this.y += this.velocityY;
+
+        // Add some randomness to the movement
+        this.velocityX += Phaser.Math.FloatBetween(-0.5, 0.5);
+        this.velocityY += Phaser.Math.FloatBetween(-0.5, 0.5);
+    }
+}
+
 
   export class Bone extends Projectile {
     constructor(scene, x, y) {

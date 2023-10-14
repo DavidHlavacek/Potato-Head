@@ -2,14 +2,14 @@ import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
 import Hearts from '../components/Heart/Heart.js'
 import {FirstEnemy, SecondEnemy} from '../components/enemies/Enemy.js'
-import {Bullet, Laser, Bone, Weapon} from '../components/projectiles/projectiles.js'
+import {Trash, Bullet, Laser, Bone, Weapon} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
     constructor() {
       super({ key: 'MainScene' });
       this.enemyActiveProjectiles = []; // Array to store active projectiles
       this.friendlyActiveProjectiles = [];
       this.enemySequence = [
-        FirstEnemy, // The initial enemy type
+        FirstEnemy,
         SecondEnemy     // The next enemy type
         // Add more enemy types in the desired order
       ];
@@ -27,6 +27,11 @@ export default class MainScene extends Phaser.Scene {
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
       this.load.image('laser', require('../assets/sprites/projectiles/laser.png'));
+      this.load.image('weapon', require('../assets/sprites/projectiles/fireball.gif'));
+      this.load.image('bullet', require('../assets/sprites/projectiles/bullet.png'));
+      this.load.image('trash', require('../assets/sprites/projectiles/trash.png'));
+
+
     }
   
     create() {
@@ -55,14 +60,16 @@ export default class MainScene extends Phaser.Scene {
 
     spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
-        console.log("spawn bullet");
-
-        const bullet = new Bullet(this, x, y);
-
-        // console.log(bullet.x);
-        // console.log(bullet.y);
-        // Implement bullet-specific logic here
+        const bullet = new Bullet(scene, x, y);
+        bullet.setScale(0.1);
         this.enemyActiveProjectiles.push(bullet);
+    }
+
+    spawnTrash(scene, x, y) {
+        // Create and handle bullet projectiles
+        const trash = new Trash(scene, x, y);
+        trash.setScale(0.15);
+        this.enemyActiveProjectiles.push(trash);
     }
 
     spawnBone(scene, x, y) {
@@ -75,7 +82,8 @@ export default class MainScene extends Phaser.Scene {
 
       spawnWeapon(scene, x, y) {
         // Create and handle bone projectiles
-        const weapon = new Weapon(scene, x, y);
+        const weapon = new Weapon(scene, x + 65, y);
+        weapon.setScale(0.15);
         this.friendlyActiveProjectiles.push(weapon);
         
       }
