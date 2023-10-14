@@ -190,6 +190,7 @@ export default class MainScene extends Phaser.Scene {
                 this.time.delayedCall(500, () => {
                     enemy.isHitCooldown = false;
                     enemy.clearTint(); // Clear the tint after the cooldown
+                    //uhh
                 });
             }
         }else {
