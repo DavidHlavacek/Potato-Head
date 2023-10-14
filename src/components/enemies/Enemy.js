@@ -45,10 +45,15 @@ export class FirstEnemy extends Enemy {
     this.scene.add.existing(this);
     this.lastShakeTime = 0; // Keep track of the last shake time
     this.shake = 5;
+
+    this.lastShotTime = 0; // Keep track of the last shot time
+    this.nextShotDelay = Phaser.Math.Between(500, 3000);
+
+    
   }
 
   shoot() {
-    this.scene.spawnBone(this.scene, this.x, this.y);
+    this.scene.spawnBone(this.scene, this.x - 190, this.y - 100);
     
   }
 
@@ -70,7 +75,13 @@ export class FirstEnemy extends Enemy {
       }
       
       // Always shoot after shaking
-      this.shoot();
+      if (currentTime - this.lastShotTime >= this.nextShotDelay) {
+        this.shoot();
+        
+        // Set a new random delay for the next shot
+        this.nextShotDelay = Phaser.Math.Between(300, 2000);
+        this.lastShotTime = currentTime;
+      }
     }
   }
 
