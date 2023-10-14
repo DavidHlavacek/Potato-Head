@@ -103,7 +103,7 @@ export class SecondEnemy extends Enemy {
     // Add the enemy to the scene
     this.scene.add.existing(this);
     this.lastShakeTime = 0; // Keep track of the last shake time
-    this.shake = 5;
+    this.shake = 8;
 
     this.lastShotTime = 0; // Keep track of the last shot time
     this.nextShotDelay = Phaser.Math.Between(500, 3000);
