@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
-import {FirstEnemy} from '../components/enemies/Enemy.js'
+import {FirstEnemy, SecondEnemy} from '../components/enemies/Enemy.js'
 import {Bullet, Laser, Bone} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -8,7 +8,7 @@ export default class MainScene extends Phaser.Scene {
       this.activeProjectiles = []; // Array to store active projectiles
       this.enemySequence = [
         FirstEnemy, // The initial enemy type
-             // The next enemy type
+        SecondEnemy     // The next enemy type
         // Add more enemy types in the desired order
       ];
       this.currentEnemyIndex = 0;
@@ -19,6 +19,7 @@ export default class MainScene extends Phaser.Scene {
     //   this.load.image('background', require ('../assets/background/bg.png'));
       this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
+      this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
     }
   

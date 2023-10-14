@@ -51,6 +51,11 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
     update() {
 
+        if(this.x < 100 || this.y < 100) {
+            this.destroy();
+            return;
+        }
+
         this.x += this.velocityX;
         this.y += this.velocityY;
 
