@@ -131,6 +131,7 @@ export default class MainScene extends Phaser.Scene {
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
             console.log('Enemy hit!');
             this.totalCollisions++;
+            projectile.destroy();
             enemy.takeDamage();
             enemy.setTint(0xff0000); // Turn main character red on collision
       } else {

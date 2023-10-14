@@ -4,7 +4,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.projectileType = projectileType;
     this.maxHits = maxHits;
-    this.hits = 0;
 
     // Add the enemy to the scene
     this.scene.add.existing(this);
@@ -17,9 +16,15 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   die() {
-    while(this.x < 1300) {
-      this.x += 10;
-    }
+    const tweens = this.scene.tweens;
+    tweens.add({
+        targets: this,
+        x: this.x - 1000, // Adjust the distance as needed
+        duration: 1000, // Adjust the duration as needed
+        onComplete: () => {
+            this.destroy();
+        }
+    });
   }
 
   takeDamage() {
@@ -51,6 +56,7 @@ export class FirstEnemy extends Enemy {
 
     this.lastShotTime = 0; // Keep track of the last shot time
     this.nextShotDelay = Phaser.Math.Between(500, 3000);
+    this.hits = 0;
 
     
   }
@@ -111,6 +117,7 @@ export class SecondEnemy extends Enemy {
     this.lastShotTime = 0; // Keep track of the last shot time
     this.nextShotDelay = Phaser.Math.Between(500, 3000);
 
+    this.hits = 0;
     
   }
 
