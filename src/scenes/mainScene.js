@@ -26,6 +26,8 @@ export default class MainScene extends Phaser.Scene {
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
       this.load.image('bone', require('../assets/sprites/projectiles/bone.png'));
       this.load.image('laser', require('../assets/sprites/projectiles/laser.png'));
+      this.load.image('weapon', require('../assets/sprites/projectiles/fireball.gif'));
+
     }
   
     create() {
@@ -85,7 +87,8 @@ export default class MainScene extends Phaser.Scene {
 
       spawnWeapon(scene, x, y) {
         // Create and handle bone projectiles
-        const weapon = new Weapon(scene, x, y);
+        const weapon = new Weapon(scene, x + 65, y);
+        weapon.setScale(0.15);
         this.friendlyActiveProjectiles.push(weapon);
         
       }
