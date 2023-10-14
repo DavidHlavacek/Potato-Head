@@ -11,11 +11,20 @@ export default class MainCharacter extends Phaser.Physics.Arcade.Sprite {
       
   }
 
+  shoot() {
+    // Create and shoot the appropriate projectile based on the enemy's type
+    this.scene.spawnWeapon(this.scene, this.x, this.y);
+  }
+
   update() {
     if (this.scene.cursors.left.isDown && this.x > 55) {
         this.x -= this.speed;
     } else if (this.scene.cursors.right.isDown && this.x < 600) {
         this.x += this.speed;
+    }
+
+    if(this.scene.cursors.space.isDown) {
+      this.shoot();
     }
 
     if (this.scene.cursors.up.isDown && !this.isJumping) {

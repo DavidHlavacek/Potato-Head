@@ -1,11 +1,12 @@
 import Phaser from 'phaser'
 import MainCharacter from '../components/mainCharacter/mainCharacter.js'
 import {FirstEnemy, SecondEnemy} from '../components/enemies/Enemy.js'
-import {Bullet, Laser, Bone} from '../components/projectiles/projectiles.js'
+import {Bullet, Laser, Bone, Weapon} from '../components/projectiles/projectiles.js'
 export default class MainScene extends Phaser.Scene {
     constructor() {
       super({ key: 'MainScene' });
-      this.activeProjectiles = []; // Array to store active projectiles
+      this.enemyActiveProjectiles = []; // Array to store active projectiles
+      this.friendlyActiveProjectiles = [];
       this.enemySequence = [
         FirstEnemy, // The initial enemy type
         SecondEnemy     // The next enemy type
@@ -52,21 +53,28 @@ export default class MainScene extends Phaser.Scene {
         // console.log(bullet.x);
         // console.log(bullet.y);
         // Implement bullet-specific logic here
-        this.activeProjectiles.push(bullet);
+        this.enemyActiveProjectiles.push(bullet);
     }
 
     spawnBone(scene, x, y) {
         // Create and handle bone projectiles
         const bone = new Bone(scene, x, y);
         bone.setScale(0.03);
-        this.activeProjectiles.push(bone);
+        this.enemyActiveProjectiles.push(bone);
+        
+      }
+
+      spawnWeapon(scene, x, y) {
+        // Create and handle bone projectiles
+        const weapon = new Weapon(scene, x, y);
+        this.friendlyActiveProjectiles.push(weapon);
         
       }
     
       spawnLaser(scene,x, y) {
         // Create and handle laser projectiles
         const laser = new Laser(this, x, y);
-        this.activeProjectiles.push(laser);
+        this.enemyActiveProjectiles.push(laser);
         // Implement laser-specific logic here
       }
 
@@ -114,12 +122,20 @@ export default class MainScene extends Phaser.Scene {
         // You should maintain a list of active projectiles in your game
         // and iterate through them to call their update methods.
         // Example:
-        this.activeProjectiles.forEach(projectile => {
+        this.enemyActiveProjectiles.forEach(projectile => {
           projectile.update();
   
           // Check for collision with main character
           this.handleCollision(projectile, this.mainCharacter);
       });
+
+      this.friendlyActiveProjectiles.forEach(projectile => {
+        projectile.update();
+
+        // Check for collision with main character
+        this.handleCollision(projectile, this.enemy);
+    });
+      
         // Update bullets
     
 

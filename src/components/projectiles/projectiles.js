@@ -69,7 +69,31 @@ class Projectile extends Phaser.GameObjects.Sprite {
   }
   
     // Implement bullet-specific behaviors, e.g., update and collision handling
-
+    export class Weapon extends Projectile {
+        constructor(scene, x, y) {
+          super(scene, x, y, 'weapon', 20, 20);
+    
+          this.velocityX = 10;  // Horizontal velocity (to the left)
+        }
+    
+        // handleCollision() {
+        //   console.log("consa waaaa")
+        //   this.scene.handleCollision(this);
+        // }
+    
+        update() {
+    
+            // if(this.x < 0 || this.y > 700) {
+            //     this.destroy();
+            //     return;
+            // }
+    
+            this.x += this.velocityX;
+    
+            // Adjust the size of the parabola by changing the vertical velocity
+         
+          }
+      }
   
   export class Laser extends Projectile {
     constructor(scene, x, y, textureKey, laserSpeed, laserDamage) {
