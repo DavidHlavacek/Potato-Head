@@ -15,17 +15,18 @@ export default class Hearts {
         if (this.hearts.length > 0) {
             const lostHeart = this.hearts.pop();
             lostHeart.setActive(false).setVisible(false);
-
+    
             // Decrease mainCharacter's lives
             this.mainCharacter.lives--;
-
+    
             // Check if all lives are gone (game over condition)
-            if (this.mainCharacter.lives <= 0) {
-                this.scene.pause();
+            if (this.mainCharacter.lives < 0) {
+                this.scene.scene.pause(); // Use scene.scene.pause() to pause the scene
                 console.log('Game over!');
             }
-
+    
             console.log(`Remaining Hearts: ${this.hearts.length}`);
         }
     }
+    
 }

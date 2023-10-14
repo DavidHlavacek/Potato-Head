@@ -38,25 +38,19 @@ export default class MainScene extends Phaser.Scene {
       this.camera = this.cameras.add(0, 0, 1200, 600);
       this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
 
-      this.hearts = new Hearts(this, this.mainCharacter, 3);
       this.mainCharacter = new MainCharacter(this, 0 + 100, 548, 'mainCharacter', 10, 15);
       this.cursors = this.input.keyboard.createCursorKeys();
       this.mainCharacter.setScale(0.3);
 
       this.spawnCurrentEnemy();
 
-     
+         this.hearts = new Hearts(this, 3, this.mainCharacter);
+
   
 
       // Set the scale and position of the hearts
-      for (let i = 0; i < this.hearts.length; i++) {
-          const heart = this.hearts[i];
-          heart.setScale(0.05);
-          heart.x = 20 * i + 10;
+      this.heartsTotal = this.hearts.totalHearts
       }
-  
-      this.heartsTotal = this.hearts.length;
-  }
 
     spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
