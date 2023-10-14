@@ -42,16 +42,6 @@ export default class MainScene extends Phaser.Scene {
       this.mainCharacter.setScale(0.3);
 
       this.spawnCurrentEnemy();
-<<<<<<< HEAD
-
-         this.hearts = new Hearts(this, 3, this.mainCharacter);
-
-  
-
-      // Set the scale and position of the hearts
-      this.heartsTotal = this.hearts.totalHearts
-      }
-=======
       this.hearts = [];
       for (let i = 0; i < 3; i++) {
         const heart = this.add.image(100 + i * 30, 50, 'heart');
@@ -64,7 +54,6 @@ export default class MainScene extends Phaser.Scene {
    
   
   }
->>>>>>> 531599f8e2eec0c18ce759cb673af1fc475d1415
 
     spawnBullet(scene,x, y) {
         // Create and handle bullet projectiles
