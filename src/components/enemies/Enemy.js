@@ -1,6 +1,6 @@
 class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, textureKey, projectileType, maxHits) {
-    super(scene, x, y, textureKey);
+    super(scene, scene.cameras.main.width + 100, scene.cameras.main.height - 100, textureKey);
     this.scene = scene;
     this.projectileType = projectileType;
     this.maxHits = maxHits;
@@ -12,7 +12,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
   update() {
     // Move the enemy to the left
-    
+    this.shoot();
    
   }
 
@@ -47,12 +47,11 @@ export class FirstEnemy extends Enemy {
   }
 
   shoot() {
-    this.scene.spawnBullet(this.x, this.y);
+    this.scene.spawnBullet(this.x - this.width, this.y);
+    console.log(this.width);
   }
 
-  update() {
-    this.shoot();
-  }
+
 
   nextEnemy() {
     // Implement logic to replace the enemy with a different one
