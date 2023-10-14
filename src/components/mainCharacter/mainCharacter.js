@@ -5,6 +5,8 @@ export default class MainCharacter extends Phaser.GameObjects.Sprite {
       this.scene = scene;
       this.health = health;
       this.speed = speed;
+
+      
     
         this.scene.add.existing(this);
 
