@@ -20,6 +20,7 @@ export default class MainScene extends Phaser.Scene {
     preload() {
       // Load enemy textures, assets, etc.
     //   this.load.image('background', require ('../assets/background/bg.png'));
+      this.load.image('heart', require('../assets/background/heart.png'));
       this.load.image('mainCharacter', require('../assets/sprites/characters/potatoHead.png'));
       this.load.image('firstEnemy', require('../assets/sprites/enemies/skullboi.gif'));
       this.load.image('secondEnemy', require('../assets/sprites/enemies/raccoon.png'));
@@ -27,21 +28,38 @@ export default class MainScene extends Phaser.Scene {
     }
   
     create() {
-
-        this.camera = this.cameras.add(0, 0, 1200, 600  );
-        
       
-        this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
-        
-
-        this.mainCharacter = new MainCharacter(this, 0 + 100, 548, 'mainCharacter', 10, 15);
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.mainCharacter.setScale(0.3);
-
-        this.spawnCurrentEnemy();
-      // Create an enemy instance
+      this.camera = this.cameras.add(0, 0, 1200, 600);
+      this.camera.setBackgroundColor('rgba(255, 0, 255, 1)');
   
-      // Add the enemy to the update list
+      this.mainCharacter = new MainCharacter(this, 0 + 100, 548, 'mainCharacter', 10, 15);
+      this.cursors = this.input.keyboard.createCursorKeys();
+      this.mainCharacter.setScale(0.3);
+  
+      this.spawnCurrentEnemy();
+  
+      // Add hearts
+      this.hearts = [];
+      const heartCount = 3;
+  
+      for (let i = 0; i < heartCount; i++) {
+          const heart = this.add.image(30 + (i * 30), 30, 'heart').setScale(0.5);
+          heart.setScrollFactor(0);
+          this.hearts.push(heart);
+      }
+      this.hearts = this.add.group({
+        key: 'heart',
+        repeat: 2, // Number of hearts (adjust as needed)
+        setXY: { x: 10, y: 10, stepX: 20 } // Adjust positioning as needed
+    });
+
+    // Scale down the hearts and reposition them
+    this.hearts.children.iterate((heart, index) => {
+        heart.setScale(0.05); // Adjust the scale as needed
+        heart.x = 20 * index + 10; // Adjust the positioning as needed
+    });
+
+    this.heartsTotal = this.hearts.getChildren().length;
     }
 
     spawnBullet(scene,x, y) {
@@ -85,6 +103,18 @@ export default class MainScene extends Phaser.Scene {
         this.enemy = enemy;
         this.enemy.setScale(1.4);
       }
+      loseHeart() {
+        if (this.hearts.length > 0) {
+            const heart = this.hearts.pop();
+            heart.destroy();
+        }
+
+        // Check if all hearts are gone (game over condition)
+        if (this.hearts.length === 0) {
+            this.scene.pause();
+            console.log('Game over!');
+        }
+    }
       handleCollision(projectile, mainCharacter) {
         const projectileBounds = new Phaser.Geom.Rectangle(
             projectile.x + 50, // Adjust these values to set the position of the bounding box
@@ -99,11 +129,13 @@ export default class MainScene extends Phaser.Scene {
             50, // Set a very small width
             50  // Set a very small height
         );
-    
+          
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
             console.log('Collision detected');
             this.totalCollisions++;
             this.scene.pause();
+            this.loseHeart(); // Call loseHeart when there is a collision
+
             console.log('Game over!');
             mainCharacter.setTint(0xff0000); // Turn main character red on collision
       } else {
@@ -115,17 +147,17 @@ export default class MainScene extends Phaser.Scene {
 
     enemyHit(projectile, enemy) {
         const projectileBounds = new Phaser.Geom.Rectangle(
-            projectile.x + 10, // Adjust these values to set the position of the bounding box
-            projectile.y + 10,
-            18, // Set a very small width
-            18  // Set a very small height
+            projectile.x + 50, // Adjust these values to set the position of the bounding box
+            projectile.y + 50,
+            50, // Set a very small width
+            50  // Set a very small height
         );
     
         const characterBounds = new Phaser.Geom.Rectangle(
             enemy.x + 5, // Adjust these values to set the position of the bounding box
             enemy.y + 5,
-            18, // Set a very small width
-            18  // Set a very small height
+            50, // Set a very small width
+            50  // Set a very small height
         );
     
         if (Phaser.Geom.Intersects.RectangleToRectangle(projectileBounds, characterBounds)) {
